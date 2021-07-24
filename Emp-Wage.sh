@@ -20,13 +20,22 @@ function getworkinghours() {
    fi
 echo $emphrs
 }
+
+function calculatedailywage {
+  local workhours=$1
+  wage=$(($workhours*$emprateperhr))
+  echo $wage
+} 
+
 while [[ $totalemphrs -lt $maxhrs_month && $totalworkingdays -lt $workingDays ]]
 do
    ((totalworkingdays++))
    empcheck=$((RANDOM%3))
    workhours="$( getworkinghours $empcheck )"        
    totalemphrs=$(($workhours+$totalemphrs))
+   empdailywage[$totalworkingdays]="$( calculatedailywage $workhours)"
 done
  totalSalary=$(($emprateperhr*$totalemphrs))
+ echo "daily wage :: " ${empdailywage[@]}
 
 
