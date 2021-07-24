@@ -7,21 +7,25 @@ isparttime=2
 emprateperhr=20
 totalemphrs=0
 totalworkingdays=0
-while [[ $totalemphrs -lt $maxhrs_month && $totalworkingdays -lt $workingDays ]]
-do
-   ((totalworkingdays++))
-   empcheck=$((RANDOM%3))
-   if [ $empcheck -eq $isfulltime ]
+
+function getworkinghours() {
+  if [ $1 -eq $isfulltime ]
    then
       emphrs=8
-   elif [ $empcheck -eq $isparttime ]
+   elif [ $1 -eq $isparttime ]
    then
       emphrs=4
    else
       emphrs=0
    fi
-   wage=$(($emphrs*$emprateperhr))
-   totalemphrs=$(($emphrs+$totalemphrs))
+echo $emphrs
+}
+while [[ $totalemphrs -lt $maxhrs_month && $totalworkingdays -lt $workingDays ]]
+do
+   ((totalworkingdays++))
+   empcheck=$((RANDOM%3))
+   workhours="$( getworkinghours $empcheck )"        
+   totalemphrs=$(($workhours+$totalemphrs))
 done
  totalSalary=$(($emprateperhr*$totalemphrs))
 
