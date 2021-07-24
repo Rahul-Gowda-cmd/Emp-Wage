@@ -8,6 +8,8 @@ emprateperhr=20
 totalemphrs=0
 totalworkingdays=0
 
+decalre -A empdailywage
+
 function getworkinghours() {
   if [ $1 -eq $isfulltime ]
    then
@@ -37,5 +39,6 @@ do
 done
  totalSalary=$(($emprateperhr*$totalemphrs))
  echo "daily wage :: " ${empdailywage[@]}
+ echo "day :: " ${!empdailywage[*]}
 
 
